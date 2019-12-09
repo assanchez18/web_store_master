@@ -4,7 +4,60 @@
 </head>
 <body>
 
-	<h2>Nuevo pedido</h2>
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">PEDIDOS</a>
+    </div>
+</nav>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">NUEVO PEDIDO</h1>
+     </div>
+</section>
+
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+					<tbody>
+						<form action="/Orders/New" method="post">
+                	        <tr>
+            	                <th scope="col">Descripción del pedido</th>
+        	                    <td scope="col"><input type='text' name='description' value=''> </td>
+        	                    <td></td>
+    	                    </tr>
+    	                    <tr>
+            	                <th scope="col">Elemento</th>
+        	                    <td scope="col"><input type='text' name='element[]' value=''> </td>
+        	                    <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+    	                    </tr>
+    	                    <tr>
+            	                <th scope="col">Elemento2</th>
+        	                    <td scope="col"><input type='text' name='element[]' value=''> </td>
+        	                    <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+    	                    </tr>                
+							<tr>
+								<td><button class="btn btn-lg btn-block btn-success text-uppercase">Nuevo elemento</button></td>
+								<td></td>
+								<td><button class="btn btn-lg btn-block btn-success text-uppercase">Finalizar</button></td>
+							</tr>
+						</form>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 	<h2>Nuevo pedido</h2>
 
 	<form action="/order/new" method="post">
 		<p>Nombre: </p>
@@ -13,5 +66,8 @@
 		<input type='text' name='description'>
 		<input type='submit' value='Enviar'>
 	</form>
+	-->
+	
 </body>
 </html>
+

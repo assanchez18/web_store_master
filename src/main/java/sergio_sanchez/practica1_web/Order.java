@@ -1,16 +1,41 @@
 package sergio_sanchez.practica1_web;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="ORDERS_T")
 public class Order {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private long id;
+	
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Item> items;
 	private String name;
 	
+	public Order() {}
+	
 	public Order(String name) {
 		super();
+		this.name = name;
 		this.items = new ArrayList<Item>();
+	}
+	
+	public Order(String name, List<Item> items) {
+		super();
+		this.items = items;
 		this.name = name;
 	}
 	
@@ -18,8 +43,9 @@ public class Order {
 		this.items = items;
 	}
 	
-	public void add(Item item) {
+	public Order add(Item item) {
 		this.items.add(item);
+		return this;
 	}
 	
 	public String getName() {
@@ -32,6 +58,10 @@ public class Order {
 	
 	public List<Item> getItems() {
 		return this.items;
+	}
+	
+	public long getId() {
+		return this.id;
 	}
 	
 }
