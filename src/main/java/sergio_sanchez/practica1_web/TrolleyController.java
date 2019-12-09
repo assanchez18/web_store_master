@@ -1,10 +1,5 @@
 package sergio_sanchez.practica1_web;
 
-
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
@@ -42,11 +37,17 @@ public class TrolleyController {
 	}
 
 	@GetMapping("/")
-	public String tablon(Model model, HttpSession session) {
+	public String tablon(Model model ) {
 		model.addAttribute("orders", trolleyRepository.findAll());
 		return "index";
 	}
-
+	
+	@GetMapping("/Orders/Edit/{id}")
+	public String editOrder(Model model, @PathVariable long id) {
+		model.addAttribute("orders", trolleyRepository.findAll());
+		return "edit_order";
+	}
+	
 	
 	@PostMapping("/Orders/New")
 	public String nuevoItem(Model model,  @RequestParam String description, @RequestParam(value="element[]") String[] elements) {
@@ -54,7 +55,12 @@ public class TrolleyController {
 		for (int i = 0; i < elements.length; i++) {
 			order.add(new Item(elements[i]));
 		}
-		return "index";
+		trolleyRepository.save(order);
+		for(Item item : order.getItems()) {
+			itemsRepository.save(item);
+		}
+		
+		return "saved_order";
 	}
 	 
 	@GetMapping("/Orders/New")
@@ -67,6 +73,7 @@ public class TrolleyController {
 	public String nuevoItem(Model model, @PathVariable long id) {
 		model.addAttribute("order", trolleyRepository.findById(id).get().getName());
 		model.addAttribute("items", itemsRepository.findItemsFromOrder(id));
+		model.addAttribute("id", id);
 		return "show_order";
 	}
 }
