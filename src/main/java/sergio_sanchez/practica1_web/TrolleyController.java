@@ -1,8 +1,8 @@
 package sergio_sanchez.practica1_web;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,16 +44,34 @@ public class TrolleyController {
 	
 	@GetMapping("/Orders/Edit/{id}")
 	public String editOrder(Model model, @PathVariable long id) {
-		model.addAttribute("orders", trolleyRepository.findAll());
+		Order order = trolleyRepository.getOne(id);
+		ArrayList<Item> items = itemsRepository.findItemsFromOrder(id);
+		model.addAttribute("order", order.getName());
+		model.addAttribute("items", items);		
+		model.addAttribute("id", id);
 		return "edit_order";
 	}
 	
+	@PostMapping("/SaveOrder/{id}")
+	public String saveOrder(Model model, @PathVariable long id, @RequestParam String description, @RequestParam(value="element[]") String[] elements){
+		trolleyRepository.deleteById(id);
+		Order order = new Order(description);		
+		for(String element : elements) {
+			order.add(new Item(element));
+		}
+		trolleyRepository.save(order);
+		for(Item item : order.getItems()) {
+			itemsRepository.save(item);
+		}
+		return "saved_order";
+	}
 	
 	@PostMapping("/Orders/New")
 	public String nuevoItem(Model model,  @RequestParam String description, @RequestParam(value="element[]") String[] elements) {
 		Order order = new Order(description);		
-		for (int i = 0; i < elements.length; i++) {
-			order.add(new Item(elements[i]));
+		for(String element : elements) {
+			if(element != "")
+				order.add(new Item(element));
 		}
 		trolleyRepository.save(order);
 		for(Item item : order.getItems()) {
