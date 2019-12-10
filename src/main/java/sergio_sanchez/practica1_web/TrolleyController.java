@@ -42,6 +42,12 @@ public class TrolleyController {
 		return "index";
 	}
 	
+	@GetMapping("/delete/{id}")
+	public String removeElement(Model model, @PathVariable long id) {
+		trolleyRepository.deleteById(id);
+		return "deleted_order";
+	}
+	
 	@GetMapping("/Orders/Edit/{id}")
 	public String editOrder(Model model, @PathVariable long id) {
 		Order order = trolleyRepository.getOne(id);

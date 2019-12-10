@@ -32,3 +32,9 @@ $(document).on("click", '.delete', function() {
 	$(this).closest('tr').remove();
 	trashButtonController();
 });
+
+function sureToRemove(id) {
+	if(confirm("Seguro que quieres borrar")) {
+		window.location.href = '/delete/' + id;
+	}
+}
